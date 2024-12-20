@@ -1,5 +1,5 @@
-export const App = () => {
+import "App.css";
+
+export default App = () => {
   return <h1>Hello!</h1>;
 };
-
-export default App;

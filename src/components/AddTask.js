@@ -1,51 +1,27 @@
-import { useState } from "react";
-import "./AddTask.css";
-
-export const AddTask = ({ tasks, setTasks }) => {
-  const [taskValue, setTaskValue] = useState("");
-  const [progress, setProgress] = useState(false);
-
-  const handleChange = (event) => {
-    setTaskValue(event.target.value);
-  };
-
-  const handleReset = () => {
-    setTaskValue("");
-    setProgress(false);
-  };
+export const AddTask = ({ taskList, setTaskList }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    const task = {
-      id: Math.floor(Math.random() * 1000000),
-      name: taskValue,
-      completed: Boolean(progress),
+    const date = new Date();
+    const newTask = {
+      id: date.getTime(),
+      name: e.target.task.value,
+      time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
     };
-    setTasks([...tasks, task]);
-    handleReset();
+    setTaskList([...taskList, newTask]);
+    e.target.task.value = "";
   };
-
   return (
-    <section className="addtask">
+    <section className="addTask">
       <form onSubmit={handleSubmit}>
         <input
-          onChange={handleChange}
           type="text"
           name="task"
-          id="task"
-          placeholder="Task Name"
           autoComplete="off"
-          value={taskValue}
+          placeholder="add task"
+          maxLength={25}
         />
-        <select onChange={(e) => setProgress(e.target.value)} value={progress}>
-          <option value="false">Pending</option>
-          <option value="true">Completed</option>
-        </select>
-        <button type="submit">Add Task</button>
-        <span className="reset" onClick={handleReset}>
-          Reset
-        </span>
+        <button type="submit">Add</button>
       </form>
-      <p>{taskValue}</p>
     </section>
   );
 };

@@ -14,6 +14,7 @@ export const AddTask = ({ task, setTask, taskList, setTaskList }) => {
           : todo
       );
       setTaskList(updatedTaskList);
+      setTask({});
     } else {
       const date = new Date();
       const newTask = {
@@ -22,7 +23,7 @@ export const AddTask = ({ task, setTask, taskList, setTaskList }) => {
         time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
       };
       setTaskList([...taskList, newTask]);
-      e.target.task.value = "";
+      setTask({});
     }
   };
   return (
@@ -31,13 +32,13 @@ export const AddTask = ({ task, setTask, taskList, setTaskList }) => {
         <input
           type="text"
           name="task"
-          value={task.name}
+          value={task.name || ""}
           autoComplete="off"
           placeholder="add task"
           maxLength={25}
           onChange={(e) => setTask({ ...task, name: e.target.value })}
         />
-        <button type="submit">Add</button>
+        <button type="submit">{task.id ? "update" : "Add"}</button>
       </form>
     </section>
   );
